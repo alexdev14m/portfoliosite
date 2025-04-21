@@ -79,7 +79,7 @@ function App() {
 
   return (
   <>
-    <Router>
+    <Router basename="/portfoliosite/">
       <header className="header" ref={headerRef}>
         <div className="container">
           <ul className="header-list">
