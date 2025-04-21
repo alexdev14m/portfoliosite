@@ -6,11 +6,14 @@ import About from './About';
 import Projects from './Projects'
 import Contacts from './Contacts';
 import './style.css';
+import './mstyle.css';
 
 function App() {
   const bodyRef = useRef(document.body);
   const headerRef = useRef(null);
   const headTextRef = useRef([]);
+  const titleRef = useRef(null);
+  const pTitleRef = useRef([]);
   const switchBtnRef = useRef(null);
 
   useEffect(() =>{
@@ -23,6 +26,7 @@ function App() {
     const body = bodyRef.current;
     const header = headerRef.current;
     const switchBtn = switchBtnRef.current;
+    const title = titleRef.current;
 
     body.classList.remove('light-mode', 'dark-mode');
     header.classList.remove('l-mode-header', 'd-mode-header');
@@ -31,6 +35,14 @@ function App() {
       el.classList.remove('l-mode-headText', 'd-mode-headText')
     });
     switchBtn.classList.remove('l-mode-headText', 'd-mode-headText');
+    if (title){
+      title.classList.remove('l-mode-title', 'd-mode-title');
+    }
+    pTitleRef.current.forEach(el => {
+      if (!el) return;
+      el.classList.remove('l-p-title', 'd-p-title');
+    });
+
 
     if (isLight){
       body.classList.add('light-mode');
@@ -41,6 +53,11 @@ function App() {
       });
       switchBtn.innerText = "☀︎";
       switchBtn.classList.add('l-mode-headText');
+      title.classList.add('l-mode-title');
+      pTitleRef.current.forEach(el => {
+        if (!el) return;
+        el.classList.add('l-p-title');
+      });
       localStorage.setItem('theme', 'light');
     } else {
       body.classList.add('dark-mode');
@@ -51,6 +68,11 @@ function App() {
       });
       switchBtn.classList.add('d-mode-headText');
       switchBtn.innerText  = "⏾";
+      title.classList.add('d-mode-title');
+      pTitleRef.current.forEach(el => {
+        if (!el) return;
+        el.classList.add('d-p-title');
+      });
       localStorage.setItem('theme', 'dark');
     }
   }, []);
@@ -84,8 +106,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={
-            <div className="main">
-              <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque feugiat nisi dapibus dapibus. Morbi nulla purus, ornare at urna ac, auctor tristique mauris. Donec vitae luctus metus. Vivamus rhoncus libero id dolor facilisis, eget pulvinar massa posuere. Curabitur in bibendum leo. Integer gravida diam nibh, nec dignissim erat pulvinar sit amet. Etiam hendrerit molestie cursus. Mauris ac tortor malesuada, hendrerit erat nec, placerat massa. Vivamus facilisis luctus dui, in vehicula quam maximus non. In iaculis felis neque, ac porttitor felis vulputate consectetur.</h1>
+            <div className="home-page">
+              <div className="main">
+                <h1 className="title" ref={titleRef}>Welcome to my Portfolio website!</h1>
+                <h2 className="p-title" ref={(el) => (pTitleRef.current[0] = el)}>As you might have noticed the website is hosted on Github Pages.</h2>
+                <h3 className="p-title" ref={(el) => (pTitleRef.current[1] = el)}>This site will be used for documenting all of my Projects.
+                  The site is still under construction and you have to wait until I finish the main design :)
+                </h3>
+              </div>
             </div>
           }
         />
